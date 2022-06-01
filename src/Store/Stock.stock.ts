@@ -8,11 +8,20 @@ const stock = createSlice({
     todos: mock.data,
     flag: false,
     inputValue: '',
+    searchValue: '',
     editValue: { id: 0, title: '' },
   },
   reducers: {
-    inputChange(state, action: PayloadAction<string>) {
-      state.inputValue = action.payload;
+    inputChange(state, action: PayloadAction<{ title: string; mode: string }>) {
+      if (action.payload.mode === 'search') {
+        state.inputValue = '';
+        state.searchValue = action.payload.title;
+      }
+
+      if (action.payload.mode === 'add') {
+        state.searchValue = '';
+        state.inputValue = action.payload.title;
+      }
     },
 
     addTodo(state, action: PayloadAction<Array<EditValues>>) {
@@ -52,6 +61,8 @@ const stock = createSlice({
 
       state.todos = arr;
     },
+
+    // searchTodo(state) {},
   },
 });
 

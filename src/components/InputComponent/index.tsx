@@ -45,7 +45,9 @@ const InputComp = () => {
             type="text"
             value={stock.inputValue}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            onChange={(e: any) => dispatch(inputChange(e.target.value))}
+            onChange={(e: any) =>
+              dispatch(inputChange({ title: e.target.value, mode: 'add' }))
+            }
             maxLength={25}
           />
           <Styled.InputButton onClick={() => SendData()}>

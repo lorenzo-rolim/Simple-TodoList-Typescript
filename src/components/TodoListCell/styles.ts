@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export const Container = styled.li`
-  ${({ theme }) => css`
+  ${() => css`
     list-style: none;
 
     width: 98%;
@@ -16,11 +16,15 @@ export const Container = styled.li`
     align-items: center;
 
     box-sizing: border-box;
+
+    cursor: pointer;
+
+    transition: all 0.15s ease-in-out;
   `}
 `;
 
 export const TodoTitle = styled.h1`
-  ${({ theme }) => css`
+  ${() => css`
     color: white;
 
     font-size: 2rem;
@@ -29,7 +33,7 @@ export const TodoTitle = styled.h1`
 `;
 
 export const IconsDiv = styled.div`
-  ${({ theme }) => css`
+  ${() => css`
     width: 13%;
     margin-left: 4rem;
 

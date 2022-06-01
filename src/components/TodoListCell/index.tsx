@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as Styled from './styles';
 import { BiEditAlt, BiTrash } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
@@ -10,11 +10,16 @@ export type TodoListCellProps = {
 };
 
 const TodoListCell = ({ title, id }: TodoListCellProps) => {
+  const [feito, setFeito] = useState(false);
+
   const dispatch = useDispatch();
 
   return (
     //
-    <Styled.Container>
+    <Styled.Container
+      onClick={() => setFeito(!feito)}
+      className={feito ? 'feito' : ''}
+    >
       <Styled.TodoTitle>{title}</Styled.TodoTitle>
       <Styled.IconsDiv>
         <BiEditAlt onClick={() => dispatch(editMode({ id, title }))} />

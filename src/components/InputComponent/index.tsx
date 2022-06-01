@@ -1,53 +1,41 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../Store';
+import {
+  addTodo,
+  editInputValues,
+  editTodo,
+  inputChange,
+} from '../../Store/Stock.stock';
 import * as Styled from './styles';
 
-export type InputCompProps = {
-  AddTodo: (title: string) => void;
-  EditTodo: () => void;
-  setFlag: (bool: boolean, title?: string, id?: number) => void;
-  Flag: boolean;
-  EditValue: {
-    id: number;
-    title: string;
-  };
-};
-
-const InputComp = ({
-  AddTodo,
-  Flag,
-  setFlag,
-  EditValue,
-  EditTodo,
-}: InputCompProps) => {
-  const [InputValues, setInputValues] = useState<string>('');
-
-  const InputChange = (event): void => {
-    setInputValues(event.target.value);
-  };
-
-  const EditChange = (event): void => {
-    setFlag(true, event.target.value, EditValue.id);
-  };
+const InputComp = () => {
+  const stock = useSelector((state: RootState) => state.stock);
+  const dispatch = useDispatch();
 
   const SendData = () => {
-    AddTodo(InputValues);
-    setFlag(false);
+    if (stock.inputValue === '') {
+      return;
+    }
 
-    setInputValues('');
+    const id = Math.floor(Math.random() * 1000);
+
+    dispatch(addTodo([{ id: id, title: stock.inputValue }, ...stock.todos]));
   };
 
   return (
     //
     <Styled.Container>
-      {Flag ? (
+      {stock.flag ? (
         <>
           <Styled.InputSearch
             type="text"
-            value={EditValue.title}
-            onChange={(e: object) => EditChange(e)}
+            value={stock.editValue.title}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onChange={(e: any) => dispatch(editInputValues(e.target.value))}
             maxLength={25}
           />
-          <Styled.InputButton onClick={() => EditTodo()}>
+          <Styled.InputButton onClick={() => dispatch(editTodo())}>
             Editar
           </Styled.InputButton>
         </>
@@ -55,8 +43,9 @@ const InputComp = ({
         <>
           <Styled.InputSearch
             type="text"
-            value={InputValues}
-            onChange={(e: object) => InputChange(e)}
+            value={stock.inputValue}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onChange={(e: any) => dispatch(inputChange(e.target.value))}
             maxLength={25}
           />
           <Styled.InputButton onClick={() => SendData()}>

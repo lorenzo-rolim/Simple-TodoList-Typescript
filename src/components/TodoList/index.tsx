@@ -1,14 +1,20 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../Store';
 import TodoListCell from '../TodoListCell';
 import * as Styled from './styles';
 
 import { EditValues } from '../../Store/interfaces';
+import { fetchData } from '../../Store/Stock.stock';
 
 const TodoList = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const stock = useSelector((state: RootState) => state.stock);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchData());
+  }, [dispatch]);
 
   return (
     //
@@ -24,7 +30,7 @@ const TodoList = () => {
           }
         })
         .map((todo) => (
-          <TodoListCell key={todo.id} title={todo.title} id={todo.id} />
+          <TodoListCell key={todo._id} title={todo.title} id={todo._id} />
         ))}
     </Styled.Container>
   );

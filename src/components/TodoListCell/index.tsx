@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import * as Styled from './styles';
+import * as S from './styles';
 import { BiEditAlt, BiTrash } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
-import { editMode, removeTodo } from '../../Store/Stock.stock';
+import { editMode, removeTodoApi } from '../../Store/Stock.stock';
 
 export type TodoListCellProps = {
   title: string;
-  id: number;
+  id: string;
 };
 
 const TodoListCell = ({ title, id }: TodoListCellProps) => {
@@ -14,18 +14,31 @@ const TodoListCell = ({ title, id }: TodoListCellProps) => {
 
   const dispatch = useDispatch();
 
+  function editTodo(e) {
+    e.stopPropagation();
+
+    dispatch(editMode({ id, title }));
+  }
+
+  function removeTodo(e) {
+    e.stopPropagation();
+
+    dispatch(removeTodoApi(id));
+  }
+
   return (
     //
-    <Styled.Container
+    <S.Container
       onClick={() => setFeito(!feito)}
       className={feito ? 'feito' : ''}
     >
-      <Styled.TodoTitle>{title}</Styled.TodoTitle>
-      <Styled.IconsDiv>
-        <BiEditAlt onClick={() => dispatch(editMode({ id, title }))} />
-        <BiTrash onClick={() => dispatch(removeTodo(id))} />
-      </Styled.IconsDiv>
-    </Styled.Container>
+      <S.TodoTitle>{title}</S.TodoTitle>
+      <S.IconsDiv>
+        <BiEditAlt onClick={(e) => editTodo(e)} />
+
+        <BiTrash onClick={(e) => removeTodo(e)} />
+      </S.IconsDiv>
+    </S.Container>
   );
 };
 

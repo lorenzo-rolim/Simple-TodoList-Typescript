@@ -2,9 +2,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../Store';
 import {
-  addTodo,
+  addTodoApi,
   editInputValues,
-  editTodo,
+  editTodoApi,
   inputChange,
 } from '../../Store/Stock.stock';
 import * as Styled from './styles';
@@ -18,9 +18,7 @@ const InputComp = () => {
       return;
     }
 
-    const id = Math.floor(Math.random() * 1000);
-
-    dispatch(addTodo([{ id: id, title: stock.inputValue }, ...stock.todos]));
+    dispatch(addTodoApi(stock.inputValue));
   };
 
   return (
@@ -35,7 +33,9 @@ const InputComp = () => {
             onChange={(e: any) => dispatch(editInputValues(e.target.value))}
             maxLength={25}
           />
-          <Styled.InputButton onClick={() => dispatch(editTodo())}>
+          <Styled.InputButton
+            onClick={() => dispatch(editTodoApi(stock.editValue))}
+          >
             Editar
           </Styled.InputButton>
         </>

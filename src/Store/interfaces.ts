@@ -1,4 +1,4 @@
 export interface EditValues {
-  id: number;
+  id: string;
   title: string;
 }

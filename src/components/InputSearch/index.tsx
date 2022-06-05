@@ -7,7 +7,7 @@ import * as Styled from './styles';
 export type InputSearchProps = {
   children?: React.ReactNode;
 };
-const InputSearch = ({ children }: InputSearchProps) => {
+const InputSearch = () => {
   const dispatch = useDispatch();
   const stock = useSelector((state: RootState) => state.stock);
 
@@ -17,6 +17,7 @@ const InputSearch = ({ children }: InputSearchProps) => {
       type="text"
       value={stock.searchValue}
       placeholder="Pesquise aqui"
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       onChange={(e: any) =>
         dispatch(inputChange({ title: e.target.value, mode: 'search' }))
       }
